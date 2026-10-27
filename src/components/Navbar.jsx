@@ -1,16 +1,20 @@
 export default function Navbar({ onHome, onNewBooking }) {
   return (
     <nav className="navbar">
-      <a className="nav-logo" onClick={onHome} style={{ cursor: 'pointer' }}>
-        <span className="logo-icon">💄</span>
-        <span>Beleza<span className="accent">&Arte</span></span>
-      </a>
+      <div className="nav-logo" onClick={onHome} role="button" tabIndex={0}
+           onKeyDown={e => e.key === 'Enter' && onHome()}>
+        <div className="nav-logo-mark">✦</div>
+        <div className="nav-logo-text">
+          <strong>Beleza &amp; Arte</strong>
+          <span>Salão de Beleza</span>
+        </div>
+      </div>
       <div className="nav-actions">
         <button className="btn btn-outline" onClick={onHome}>
-          📋 Agendamentos
+          Agenda
         </button>
         <button className="btn btn-primary" onClick={onNewBooking}>
-          ➕ Novo Agendamento
+          + Agendar
         </button>
       </div>
     </nav>

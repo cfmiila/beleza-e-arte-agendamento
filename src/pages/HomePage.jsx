@@ -15,9 +15,9 @@ export default function HomePage({ onNewBooking, onToast }) {
   const { appointments, confirmAppointment, cancelAppointment } = useAppContext();
   const [filter, setFilter] = useState('all');
 
-  const today    = getTodayOffset(0);
-  const tomorrow = getTodayOffset(1);
-  const weekEnd  = getTodayOffset(7);
+  const today   = getTodayOffset(0);
+  const tomorrow= getTodayOffset(1);
+  const weekEnd = getTodayOffset(7);
 
   const stats = useMemo(() => ({
     today:     appointments.filter(a => a.date === today).length,
@@ -37,61 +37,71 @@ export default function HomePage({ onNewBooking, onToast }) {
 
   function handleConfirm(id) {
     confirmAppointment(id);
-    onToast({ message: '✅ Agendamento confirmado!', type: 'success' });
+    onToast({ message: 'Agendamento confirmado', type: 'success' });
   }
-
   function handleCancel(id) {
     if (!window.confirm('Cancelar este agendamento?')) return;
     cancelAppointment(id);
-    onToast({ message: '🗑️ Agendamento cancelado.', type: 'error' });
+    onToast({ message: 'Agendamento cancelado', type: 'error' });
   }
 
   return (
     <>
-      {/* Hero */}
+      {/* ── Hero ── */}
       <div className="hero">
-        <div className="hero-content">
-          <h1>Seu salão favorito,<br /><span>na palma da mão</span></h1>
-          <p>Agende seu horário em segundos e cuide da sua beleza com quem entende do assunto.</p>
-          <div className="hero-cta">
-            <button className="btn btn-primary btn-lg" onClick={onNewBooking}>✨ Agendar agora</button>
-            <button className="btn btn-outline btn-lg"
-              onClick={() => document.getElementById('appts-section')
-                .scrollIntoView({ behavior: 'smooth' })}>
-              Ver agendamentos
-            </button>
-          </div>
+        <div className="hero-ornament hero-ornament-1" />
+        <div className="hero-ornament hero-ornament-2" />
+        <div className="hero-ornament hero-ornament-3" />
+
+        <p className="hero-eyebrow">✦ &nbsp; Beleza &amp; Arte Studio &nbsp; ✦</p>
+        <h1>
+          Arte que realça<br />
+          <em>a sua beleza natural</em>
+        </h1>
+        <p className="hero-sub">
+          Agende com os melhores profissionais e transforme cada visita em uma experiência única.
+        </p>
+        <div className="hero-cta">
+          <button className="btn btn-primary btn-lg" onClick={onNewBooking}>
+            Reservar horário
+          </button>
+          <button
+            className="btn btn-outline btn-lg"
+            onClick={() => document.getElementById('appts-section')
+              .scrollIntoView({ behavior: 'smooth' })}
+          >
+            Ver agenda
+          </button>
         </div>
       </div>
 
-      {/* Stats */}
+      {/* ── Stats ── */}
       <div className="stats">
-        <div className="stat-card">
-          <div className="stat-number">{stats.today}</div>
-          <div className="stat-label">Hoje</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-number">{stats.tomorrow}</div>
-          <div className="stat-label">Amanhã</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-number">{stats.week}</div>
-          <div className="stat-label">Esta semana</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-number">{stats.confirmed}</div>
-          <div className="stat-label">Confirmados</div>
-        </div>
+        {[
+          { num: stats.today,     label: 'Hoje'        },
+          { num: stats.tomorrow,  label: 'Amanhã'      },
+          { num: stats.week,      label: 'Esta semana' },
+          { num: stats.confirmed, label: 'Confirmados' },
+        ].map(s => (
+          <div key={s.label} className="stat-card">
+            <span className="stat-number">{s.num}</span>
+            <span className="stat-label">{s.label}</span>
+          </div>
+        ))}
       </div>
 
-      {/* Appointments list */}
+      {/* ── Appointments ── */}
       <div className="section" id="appts-section">
         <div className="section-header">
-          <h2>📅 Agendamentos <span>dos clientes</span></h2>
-          <button className="btn btn-primary btn-sm" onClick={onNewBooking}>➕ Novo</button>
+          <div className="section-title">
+            <h2>Agenda de Clientes</h2>
+            <p>Todos os agendamentos · {appointments.length} registros</p>
+          </div>
+          <button className="btn btn-primary btn-sm" onClick={onNewBooking}>
+            + Novo agendamento
+          </button>
         </div>
 
-        {/* Filter tabs */}
         <div className="filter-tabs">
           {FILTERS.map(f => (
             <button
@@ -104,25 +114,29 @@ export default function HomePage({ onNewBooking, onToast }) {
           ))}
         </div>
 
-        {/* Grid */}
         <div className="appointments-grid">
           {filtered.length === 0 ? (
             <div className="empty-state">
-              <div className="empty-icon">📭</div>
-              <h3>Nenhum agendamento encontrado</h3>
-              <p>Tente outro filtro ou crie um novo agendamento.</p>
-              <button className="btn btn-primary" style={{ marginTop: '1rem' }} onClick={onNewBooking}>
-                ➕ Novo Agendamento
+              <span className="empty-icon">◌</span>
+              <h3>Nada por aqui</h3>
+              <p>Nenhum agendamento para este filtro.</p>
+              <button
+                className="btn btn-primary"
+                style={{ marginTop: '1.5rem' }}
+                onClick={onNewBooking}
+              >
+                + Novo Agendamento
               </button>
             </div>
           ) : (
-            filtered.map(a => (
-              <AppointmentCard
-                key={a.id}
-                appt={a}
-                onConfirm={handleConfirm}
-                onCancel={handleCancel}
-              />
+            filtered.map((a, i) => (
+              <div key={a.id} style={{ animationDelay: `${i * .05}s` }}>
+                <AppointmentCard
+                  appt={a}
+                  onConfirm={handleConfirm}
+                  onCancel={handleCancel}
+                />
+              </div>
             ))
           )}
         </div>
