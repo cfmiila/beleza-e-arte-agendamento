@@ -1,16 +1,20 @@
-# React + Vite
+# 💇‍♀️ Beleza & Arte · Sistema de Agendamento
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projeto de sistema de agendamento online desenvolvido em **React.js** durante a Live 1 (**"Seu pitch e o Kiro na prática"**) do **AWS Women in Cloud Innovation Hackathon 2026**, utilizando o assistente de IA **Kiro**.
 
-Currently, two official plugins are available:
+##  Arquitetura e Estrutura do Projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```text
+salao-react/
+├── src/
+│   ├── assets/       # Imagens e recursos estáticos
+│   ├── components/   # Componentes reutilizáveis da interface
+│   ├── context/      # Gerenciamento de estado global
+│   ├── data/         # Mock data e listas de serviços
+│   ├── pages/        # Páginas da aplicação (Agendamento, Lista, Confirmação)
+│   ├── App.jsx       # Componente principal e rotas
+│   ├── main.jsx      # Ponto de entrada da aplicação React
+│   └── index.css     # Estilos globais
+├── public/           # Arquivos públicos estáticos
+├── package.json      # Dependências e scripts do projeto
+└── vite.config.js    # Configuração do bundler Vite
